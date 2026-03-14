@@ -1,0 +1,10 @@
+transformer-lens
+circuitsvis
+torch
+numpy<2
+pandas<2.3
+matplotlib
+plotly
+ipywidgets
+einops
+jupyter

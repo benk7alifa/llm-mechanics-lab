@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local outputs / temp
+outputs/
+tmp/
+temp/
+
+# Private working area
+_private/
+
+# Optional local notes and drafts
+drafts/
+notes/
+
+# Common exported artifacts if you do not want all of them tracked
+# Uncomment if needed later
+# *.html
+# *.log

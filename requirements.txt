@@ -1,9 +1,5 @@
 transformer-lens
-circuitsvis
 torch
 numpy
 pandas
 matplotlib
-plotly
-ipywidgets
-einops

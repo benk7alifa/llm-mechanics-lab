@@ -1,27 +1,56 @@
 # LLM Mechanics Lab
 
-A personal research project for understanding how transformer language models work under the hood through direct experimentation, visualization, and causal testing.
+A personal research notebook for opening up transformer behavior one concrete run at a time.
 
-## Why I built this
+## Core idea
 
-I believe that if we cannot build, inspect, and test a system ourselves, then we do not yet fully understand how it works.
+If we cannot build, inspect, and test a system ourselves, we do not yet fully understand how it works.
 
-This project is my hands-on lab for exploring how internal representations evolve across a transformer, how candidate outputs emerge layer by layer, and how causal interventions can help us identify which components actually matter.
+This repo is a small lab for doing exactly that with transformer models: tracing how an answer forms, watching competing candidates rise and fall, and then testing causal hypotheses about which internal components actually matter.
 
 ## Main artifact
 
 - `notebooks/llm_mechanics_lab.ipynb`
 
-## What this project explores
+The notebook follows a short in-context capital probe through `gpt2-small` and asks:
 
-- residual stream evolution
-- pre-attention vs post-attention vs post-MLP states
-- token emergence across checkpoints
+- When does ` Berlin` become the leading continuation?
+- How do the residual stream and competing tokens change across checkpoints?
+- Which residual components push the answer upward?
+- Which attention heads matter under activation patching and head ablation?
+
+## What the notebook covers
+
+- residual stream evolution across pre-attention, post-attention, and post-MLP checkpoints
+- competing token trajectories across the forward pass
 - direct logit attribution
-- attention pattern inspection
+- static attention pattern inspection
 - activation patching
 - head ablation
+- short interpretation blocks after the main figures
+- practical implications for debugging, trust, governance, and model-change analysis
 
-## Project status
+## Why this kind of analysis matters
 
-Work in progress.
+Mechanistic inspection helps with more than curiosity:
+
+- debugging model or prompt regressions
+- explaining behavior with stronger evidence than surface examples alone
+- checking whether a model update changes the internal route behind a behavior
+- building a more concrete notion of trust than “it worked on a few prompts”
+
+## Run locally
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+jupyter lab
+```
+
+Then open `notebooks/llm_mechanics_lab.ipynb`.
+
+## Repo layout
+
+- `notebooks/` holds the main research notebook
+- `assets/` is available for exported figures or screenshots when needed

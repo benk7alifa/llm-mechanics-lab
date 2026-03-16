@@ -12,11 +12,12 @@ This repo is a small lab for doing exactly that with transformer models: tracing
 
 - `notebooks/llm_mechanics_lab.ipynb`
 
-The notebook follows a short in-context capital probe through `gpt2-small` as a guided investigation:
+The notebook follows the prompt `The capital of France is Paris. The capital of Germany is` through `gpt2-small` as a guided investigation:
 
 - When does ` Berlin` stop losing to the wrong continuation?
 - How do the residual stream and competing tokens change across checkpoints?
 - How do the residual states themselves move as the model approaches the final answer?
+- Which layer writes change the answer margin the most, and when does the model shift from weak priors to a stable answer?
 - Which residual components push the answer upward?
 - Which attention heads matter once we move from description to causal testing?
 
@@ -26,6 +27,7 @@ The notebook follows a short in-context capital probe through `gpt2-small` as a 
 - competing token trajectories across the forward pass
 - a simple architecture / notation map for reading labels like `L9H8` and `10_mlp_out`
 - residual trajectory views alongside residual norms
+- a layer-by-layer residual-write view that separates attention updates from MLP updates
 - direct logit attribution
 - static attention pattern inspection
 - activation patching
@@ -53,7 +55,7 @@ jupyter lab
 
 Then open `notebooks/llm_mechanics_lab.ipynb`.
 
-If you prefer Colab or a fresh Jupyter runtime, the notebook now includes an optional setup cell near the top that uses `uv` to install the required packages inside the notebook environment.
+If you prefer Colab or a fresh Jupyter runtime, the notebook now includes an optional setup cell near the top that uses `uv` to install the required packages inside the notebook environment. If you use that cell, restart the runtime or kernel before continuing so the imports reload cleanly.
 
 ## Repo layout
 

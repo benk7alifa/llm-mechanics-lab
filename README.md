@@ -16,6 +16,7 @@ The notebook follows a short in-context capital probe through `gpt2-small` as a 
 
 - When does ` Berlin` stop losing to the wrong continuation?
 - How do the residual stream and competing tokens change across checkpoints?
+- How do the residual states themselves move as the model approaches the final answer?
 - Which residual components push the answer upward?
 - Which attention heads matter once we move from description to causal testing?
 
@@ -23,6 +24,8 @@ The notebook follows a short in-context capital probe through `gpt2-small` as a 
 
 - residual stream evolution across pre-attention, post-attention, and post-MLP checkpoints
 - competing token trajectories across the forward pass
+- a simple architecture / notation map for reading labels like `L9H8` and `10_mlp_out`
+- residual trajectory views alongside residual norms
 - direct logit attribution
 - static attention pattern inspection
 - activation patching
@@ -49,6 +52,8 @@ jupyter lab
 ```
 
 Then open `notebooks/llm_mechanics_lab.ipynb`.
+
+If you prefer Colab or a fresh Jupyter runtime, the notebook now includes an optional setup cell near the top that uses `uv` to install the required packages inside the notebook environment.
 
 ## Repo layout
 

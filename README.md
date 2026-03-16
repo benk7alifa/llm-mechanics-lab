@@ -12,12 +12,12 @@ This repo is a small lab for doing exactly that with transformer models: tracing
 
 - `notebooks/llm_mechanics_lab.ipynb`
 
-The notebook follows a short in-context capital probe through `gpt2-small` and asks:
+The notebook follows a short in-context capital probe through `gpt2-small` as a guided investigation:
 
-- When does ` Berlin` become the leading continuation?
+- When does ` Berlin` stop losing to the wrong continuation?
 - How do the residual stream and competing tokens change across checkpoints?
 - Which residual components push the answer upward?
-- Which attention heads matter under activation patching and head ablation?
+- Which attention heads matter once we move from description to causal testing?
 
 ## What the notebook covers
 
@@ -30,13 +30,13 @@ The notebook follows a short in-context capital probe through `gpt2-small` and a
 - short interpretation blocks after the main figures
 - practical implications for debugging, trust, governance, and model-change analysis
 
-## Why this kind of analysis matters
+## Why this kind of analysis matters once models enter real workflows
 
 Mechanistic inspection helps with more than curiosity:
 
-- debugging model or prompt regressions
-- explaining behavior with stronger evidence than surface examples alone
-- checking whether a model update changes the internal route behind a behavior
+- narrowing regressions to specific stages or components instead of treating the whole model as a black box
+- explaining behavior changes to product, review, and risk stakeholders with stronger evidence than surface examples alone
+- checking whether a model update preserved the same internal route or switched to a different and possibly more brittle one
 - building a more concrete notion of trust than “it worked on a few prompts”
 
 ## Run locally

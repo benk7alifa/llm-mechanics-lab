@@ -8,6 +8,17 @@ If we cannot build, inspect, and test a system ourselves, we do not yet fully un
 
 This repo is a small lab for doing exactly that with transformer models: tracing how an answer forms, watching competing candidates rise and fall, and then testing causal hypotheses about which internal components actually matter.
 
+## One-Minute Summary
+
+The notebook follows one concrete prediction: given `The capital of France is Paris. The capital of Germany is`, `gpt2-small` should continue with ` Berlin`.
+
+The main story is:
+
+- early checkpoints still reflect weak lexical priors and generic token fragments
+- later residual writes, especially attention-heavy ones, make ` Berlin` a real candidate and then push it into first place
+- the same late neighborhood reappears in causal tests: patching there restores the clean behavior, and ablating nearby heads damages it
+- that turns a black-box behavior into a localized debugging story with specific stages and components to inspect
+
 ## Main artifact
 
 - `notebooks/llm_mechanics_lab.ipynb`
@@ -33,6 +44,7 @@ The notebook follows the prompt `The capital of France is Paris. The capital of 
 - activation patching
 - head ablation
 - short interpretation blocks after the main figures
+- a final one-minute talk track that compresses the notebook into an explain-it-out-loud summary
 - practical implications for debugging, trust, governance, and model-change analysis
 
 ## Why this kind of analysis matters once models enter real workflows

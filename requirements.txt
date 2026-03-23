@@ -1,4 +1,5 @@
 transformer-lens
+tuned-lens
 torch
 numpy
 pandas

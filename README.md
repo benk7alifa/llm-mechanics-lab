@@ -15,6 +15,7 @@ The notebook follows one concrete prediction: given `The capital of France is Pa
 The main story is:
 
 - early checkpoints still reflect weak lexical priors and generic token fragments
+- a Tuned Lens makes some answer evidence legible earlier than the raw decoder does, while still agreeing that the decisive commitment happens late
 - later residual writes, especially attention-heavy ones, make ` Berlin` a real candidate and then push it into first place
 - the same late neighborhood reappears in causal tests: patching there restores the clean behavior, and ablating nearby heads damages it
 - that turns a black-box behavior into a localized debugging story with specific stages and components to inspect
@@ -27,6 +28,7 @@ The notebook follows the prompt `The capital of France is Paris. The capital of 
 
 - When does ` Berlin` stop losing to the wrong continuation?
 - How do the residual stream and competing tokens change across checkpoints?
+- What changes when we decode those same intermediate states with a raw Logit Lens versus a Tuned Lens?
 - How do the residual states themselves move as the model approaches the final answer?
 - Which layer writes change the answer margin the most, and when does the model shift from weak priors to a stable answer?
 - Which residual components push the answer upward?
@@ -39,6 +41,7 @@ The notebook follows the prompt `The capital of France is Paris. The capital of 
 - a simple architecture / notation map for reading labels like `L9H8` and `10_mlp_out`
 - residual trajectory views alongside residual norms
 - a layer-by-layer residual-write view that separates attention updates from MLP updates
+- a Tuned Lens versus Logit Lens comparison for the same intermediate states
 - direct logit attribution
 - static attention pattern inspection
 - activation patching
@@ -54,6 +57,7 @@ Mechanistic inspection helps with more than curiosity:
 - narrowing regressions to specific stages or components instead of treating the whole model as a black box
 - explaining behavior changes to product, review, and risk stakeholders with stronger evidence than surface examples alone
 - checking whether a model update preserved the same internal route or switched to a different and possibly more brittle one
+- distinguishing evidence that never formed from evidence that formed internally but was translated less cleanly into the final answer space
 - building a more concrete notion of trust than “it worked on a few prompts”
 
 ## Run locally

@@ -24,13 +24,6 @@ outputs/
 tmp/
 temp/
 
-# Private working area
-_private/
-
-# Optional local notes and drafts
-drafts/
-notes/
-
 # Common exported artifacts if you do not want all of them tracked
 # Uncomment if needed later
 # *.html

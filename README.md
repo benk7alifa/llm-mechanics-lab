@@ -1,0 +1,79 @@
+# LLM Mechanics Lab
+
+A personal research notebook for opening up transformer behavior one concrete run at a time.
+
+## Core idea
+
+If we cannot build, inspect, and test a system ourselves, we do not yet fully understand how it works.
+
+This repo is a small lab for doing exactly that with transformer models: tracing how an answer forms, watching competing candidates rise and fall, and then testing causal hypotheses about which internal components actually matter.
+
+## One-Minute Summary
+
+The notebook follows one concrete prediction: given `The capital of France is Paris. The capital of Germany is`, `gpt2-small` should continue with ` Berlin`.
+
+The main story is:
+
+- early checkpoints still reflect weak lexical priors and generic token fragments
+- a Tuned Lens makes some answer evidence legible earlier than the raw decoder does, while still agreeing that the decisive commitment happens late
+- later residual writes, especially attention-heavy ones, make ` Berlin` a real candidate and then push it into first place
+- the same late neighborhood reappears in causal tests: patching there restores the clean behavior, and ablating nearby heads damages it
+- that turns a black-box behavior into a localized debugging story with specific stages and components to inspect
+
+## Main artifact
+
+- `notebooks/llm_mechanics_lab.ipynb`
+
+The notebook follows the prompt `The capital of France is Paris. The capital of Germany is` through `gpt2-small` as a guided investigation:
+
+- When does ` Berlin` stop losing to the wrong continuation?
+- How do the residual stream and competing tokens change across checkpoints?
+- What changes when we decode those same intermediate states with a raw Logit Lens versus a Tuned Lens?
+- How do the residual states themselves move as the model approaches the final answer?
+- Which layer writes change the answer margin the most, and when does the model shift from weak priors to a stable answer?
+- Which residual components push the answer upward?
+- Which attention heads matter once we move from description to causal testing?
+
+## What the notebook covers
+
+- residual stream evolution across pre-attention, post-attention, and post-MLP checkpoints
+- competing token trajectories across the forward pass
+- a simple architecture / notation map for reading labels like `L9H8` and `10_mlp_out`
+- residual trajectory views alongside residual norms
+- a layer-by-layer residual-write view that separates attention updates from MLP updates
+- a Tuned Lens versus Logit Lens comparison for the same intermediate states
+- direct logit attribution
+- static attention pattern inspection
+- activation patching
+- head ablation
+- short interpretation blocks after the main figures
+- a final one-minute talk track that compresses the notebook into an explain-it-out-loud summary
+- practical implications for debugging, trust, governance, and model-change analysis
+
+## Why this kind of analysis matters once models enter real workflows
+
+Mechanistic inspection helps with more than curiosity:
+
+- narrowing regressions to specific stages or components instead of treating the whole model as a black box
+- explaining behavior changes to product, review, and risk stakeholders with stronger evidence than surface examples alone
+- checking whether a model update preserved the same internal route or switched to a different and possibly more brittle one
+- distinguishing evidence that never formed from evidence that formed internally but was translated less cleanly into the final answer space
+- building a more concrete notion of trust than “it worked on a few prompts”
+
+## Run locally
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+jupyter lab
+```
+
+Then open `notebooks/llm_mechanics_lab.ipynb`.
+
+If you prefer Colab or a fresh Jupyter runtime, the notebook now includes an optional setup cell near the top that uses `uv` to install the required packages inside the notebook environment. If you use that cell, restart the runtime or kernel before continuing so the imports reload cleanly.
+
+## Repo layout
+
+- `notebooks/` holds the main research notebook
+- `assets/` is available for exported figures or screenshots when needed
